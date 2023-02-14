@@ -3,27 +3,26 @@ package com.example.concurrentcache.service.impl;
 
 import com.example.concurrentcache.service.CacheService;
 import com.example.concurrentcache.util.ConcurrentCache;
-import com.example.concurrentcache.util.ConcurrentCacheImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 
 @Service
 public class CacheServiceImpl implements CacheService {
 
-    private static ConcurrentCache<String, String> cache = createMap();
+    @Autowired
+    private ConcurrentCache<String, String> cache;
 
     @Override
+    @Async
     public void putData(String key, String value) {
-        cache.putDataToCache(key, value);
+        cache.put(key, value);
     }
 
     @Override
+    @Async
     public String getData(String key) {
-        return cache.getDataFromCache(key);
-    }
-
-    private static ConcurrentCache<String, String> createMap() {
-        return new ConcurrentCacheImpl<>(new HashMap<>());
+        return cache.get(key);
     }
 }

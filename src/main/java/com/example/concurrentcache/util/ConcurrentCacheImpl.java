@@ -24,7 +24,7 @@ public class ConcurrentCacheImpl<K, V> implements ConcurrentCache<K,V> {
         this.map = storage;
     }
 
-    public V getDataFromCache(K key) {
+    public V get(K key) {
         getLock.lock();
 
         try {
@@ -40,7 +40,7 @@ public class ConcurrentCacheImpl<K, V> implements ConcurrentCache<K,V> {
         }
     }
 
-    public V putDataToCache(K key, V value) {
+    public V put(K key, V value) {
         putLock.lock();
 
         try {
